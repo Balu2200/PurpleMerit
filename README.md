@@ -1,93 +1,179 @@
 # PurpleMerit User Management System
 
-Production-ready MERN stack user management system with JWT authentication, role-based authorization, soft deactivation, audit fields, and a responsive dashboard UI.
+A production-ready MERN stack application for secure user management with JWT authentication, role-based access control, audit tracking, and a responsive admin dashboard.
 
-## Features
+---
 
-- Secure login with email and password
-- Public signup for users plus invite-code gated manager/admin signup
-- JWT-based authentication and protected routes
-- Role-based access control for admin, manager, and user
-- Paginated user management with search and filters
-- Create, edit, view, and deactivate users
-- My Profile page for self-service updates
-- Audit fields with created and updated metadata
-- Clean API response format and centralized error handling
-- Responsive dashboard UI built with React and Tailwind CSS
+# Overview
 
-## Tech Stack
+This project provides a complete user management solution with separate permissions for Admin, Manager, and User roles.
 
-- Frontend: React, Vite, React Router, Axios, Tailwind CSS
-- Backend: Node.js, Express.js, MongoDB, Mongoose, JWT, bcryptjs, dotenv, express-validator
+It demonstrates:
 
-## Folder Structure
+* Secure authentication
+* Backend authorization
+* REST API design
+* CRUD operations
+* Search and filtering
+* Audit metadata
+* Full-stack deployment
+* Clean architecture
+
+---
+
+# Features
+
+## Authentication
+
+* Login with email and password
+* Password hashing using bcrypt
+* JWT access token authentication
+* Protected API routes
+* Persistent login state
+
+## Authorization (RBAC)
+
+### Admin
+
+* Full user management access
+* Create users
+* Edit users
+* Assign roles
+* Activate / deactivate users
+* View all users
+
+### Manager
+
+* View users
+* Edit non-admin users
+* Limited management permissions
+
+### User
+
+* View own profile
+* Update own profile
+* Change password
+
+---
+
+# User Management
+
+* Paginated users list
+* Search by name or email
+* Filter by role
+* Filter by status
+* Create new user
+* Edit existing user
+* View user details
+* Soft deactivate users
+
+---
+
+# Audit Tracking
+
+Each user record stores:
+
+* createdAt
+* updatedAt
+* createdBy
+* updatedBy
+
+---
+
+# Tech Stack
+
+## Frontend
+
+* React
+* Vite
+* React Router
+* Axios
+* Tailwind CSS
+
+## Backend
+
+* Node.js
+* Express.js
+* MongoDB
+* Mongoose
+* JWT
+* bcryptjs
+* express-validator
+* dotenv
+
+---
+
+# Project Structure
 
 ```text
 PurpleMerit/
-  backend/
-    src/
-      config/
-      models/
-      controllers/
-      routes/
-      middleware/
-      services/
-      utils/
-      seed/
-      app.js
-      server.js
-  frontend/
-    src/
-      api/
-      context/
-      pages/
-      components/
-      layouts/
-      hooks/
-      utils/
-      App.jsx
-      main.jsx
+│
+├── backend/
+│   └── src/
+│       ├── config/
+│       ├── controllers/
+│       ├── middleware/
+│       ├── models/
+│       ├── routes/
+│       ├── services/
+│       ├── utils/
+│       ├── seed/
+│       ├── app.js
+│       └── server.js
+│
+└── frontend/
+    └── src/
+        ├── api/
+        ├── components/
+        ├── context/
+        ├── hooks/
+        ├── layouts/
+        ├── pages/
+        ├── utils/
+        ├── App.jsx
+        └── main.jsx
 ```
 
-## Installation
+---
 
-1. Install dependencies for both apps.
-2. Copy the example env files into real `.env` files.
-3. Start MongoDB locally or use MongoDB Atlas.
-4. Run the backend seed script once.
-5. Start backend and frontend dev servers.
+# Local Setup
 
-## Environment Variables
+## 1. Clone Repository
 
-### Backend `.env`
-
-```env
-PORT=5000
-MONGO_URI=
-JWT_SECRET=
-JWT_EXPIRES_IN=1d
-CLIENT_URL=http://localhost:5173
-SIGNUP_INVITE_CODE=
+```bash
+git clone <your-repository-url>
+cd PurpleMerit
 ```
 
-### Frontend `.env`
+---
 
-```env
-VITE_API_URL=http://localhost:5000/api
-```
-
-## Run Locally
-
-### Backend
+## 2. Backend Setup
 
 ```bash
 cd backend
 npm install
-npm run seed
+```
+
+Create `.env`
+
+```env
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
+JWT_EXPIRES_IN=1d
+CLIENT_URL=http://localhost:5173
+SIGNUP_INVITE_CODE=your_invite_code
+```
+
+Run backend:
+
+```bash
 npm run dev
 ```
 
-### Frontend
+---
+
+## 3. Frontend Setup
 
 ```bash
 cd frontend
@@ -95,69 +181,301 @@ npm install
 npm run dev
 ```
 
-## Seed Users
+---
 
-The seed script creates these default users:
+# Seed Data
 
-- admin@example.com / Admin@123
-- manager@example.com / Manager@123
-- user@example.com / User@123
+Run once:
 
-## Signup Roles
+```bash
+npm run seed
+```
 
-- Public signup creates a `user` account by default.
-- Selecting `manager` or `admin` in the signup form requires a valid backend `SIGNUP_INVITE_CODE`.
-- Admins can still create and manage users from the protected dashboard.
+Default accounts:
 
-## API Endpoints
+| Role    | Email                                             | Password    |
+| ------- | ------------------------------------------------- | ----------- |
+| Admin   | [admin@example.com](mailto:admin@example.com)     | Admin@123   |
+| Manager | [manager@example.com](mailto:manager@example.com) | Manager@123 |
+| User    | [user@example.com](mailto:user@example.com)       | User@123    |
 
-### Auth
+---
 
-- `POST /api/auth/login`
-- `POST /api/auth/register`
-- `GET /api/auth/me`
+# Deployment
 
-### Frontend Routes
+## Backend (Render / Railway)
 
-- `/login`
-- `/signup`
-- `/dashboard`
-- `/users`
-- `/users/new`
-- `/users/:id`
-- `/profile`
+* Root directory: `backend`
+* Build command: `npm install`
+* Start command: `npm start`
 
-### Users
+Required environment variables:
 
-- `GET /api/users`
-- `POST /api/users`
-- `GET /api/users/:id`
-- `PUT /api/users/:id`
-- `DELETE /api/users/:id`
-- `GET /api/users/me`
-- `PUT /api/users/me`
+```env
+PORT
+MONGO_URI
+JWT_SECRET
+JWT_EXPIRES_IN
+CLIENT_URL
+SIGNUP_INVITE_CODE
+```
 
-## Deployment Steps
+---
 
-### Backend on Render or Railway
+## Frontend (Vercel / Netlify)
 
-1. Create a new web service.
-2. Set the root directory to `backend`.
-3. Add the environment variables from the backend `.env` file.
-4. Use `npm install` as the build command if required.
-5. Use `npm start` as the start command.
-6. Add your MongoDB Atlas connection string to `MONGO_URI`.
-7. Set `CLIENT_URL` to your deployed frontend URL.
+Build command:
 
-### Frontend on Vercel or Netlify
+```bash
+npm run build
+```
 
-1. Create a new frontend project from the `frontend` folder.
-2. Add `VITE_API_URL` pointing to the deployed backend API.
-3. Run `npm run build` for production.
-4. Deploy the generated site output.
+Environment:
 
-## Notes
+```env
+VITE_API_URL=https://your-backend-url/api
+```
 
-- Password hashes are never returned by the API.
-- All sensitive configuration is loaded from environment variables.
-- Unauthorized requests return `401` and forbidden requests return `403`.
+---
+
+# API Documentation
+
+Base URL:
+
+```text
+https://your-backend-url/api
+```
+
+---
+
+# Authentication APIs
+
+## Login
+
+### POST `/auth/login`
+
+Authenticate user and return JWT token.
+
+### Request
+
+```json
+{
+  "email": "admin@example.com",
+  "password": "Admin@123"
+}
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "message": "Login successful",
+  "data": {
+    "token": "jwt_token",
+    "user": {
+      "_id": "...",
+      "name": "Admin",
+      "email": "admin@example.com",
+      "role": "admin"
+    }
+  }
+}
+```
+
+---
+
+## Register
+
+### POST `/auth/register`
+
+Create new account.
+
+### Request
+
+```json
+{
+  "name": "John",
+  "email": "john@example.com",
+  "password": "Password123",
+  "role": "user"
+}
+```
+
+---
+
+## Get Current User
+
+### GET `/auth/me`
+
+Header:
+
+```text
+Authorization: Bearer <token>
+```
+
+---
+
+# User APIs
+
+## Get Users
+
+### GET `/users`
+
+Admin / Manager only.
+
+Query params:
+
+| Param  | Example |
+| ------ | ------- |
+| page   | 1       |
+| limit  | 10      |
+| search | john    |
+| role   | admin   |
+| status | active  |
+
+Example:
+
+```text
+GET /users?page=1&limit=10&search=john
+```
+
+---
+
+## Create User
+
+### POST `/users`
+
+Admin only.
+
+### Request
+
+```json
+{
+  "name": "New User",
+  "email": "new@example.com",
+  "password": "Password123",
+  "role": "user",
+  "status": "active"
+}
+```
+
+---
+
+## Get User By ID
+
+### GET `/users/:id`
+
+Admin / Manager access.
+
+---
+
+## Update User
+
+### PUT `/users/:id`
+
+Admin or permitted Manager.
+
+### Request
+
+```json
+{
+  "name": "Updated Name",
+  "role": "manager",
+  "status": "active"
+}
+```
+
+---
+
+## Deactivate User
+
+### DELETE `/users/:id`
+
+Soft delete (status becomes inactive).
+
+---
+
+## My Profile
+
+### GET `/users/me`
+
+Return current logged-in user profile.
+
+---
+
+## Update My Profile
+
+### PUT `/users/me`
+
+### Request
+
+```json
+{
+  "name": "New Name",
+  "password": "NewPassword123"
+}
+```
+
+---
+
+# Standard Response Format
+
+## Success
+
+```json
+{
+  "success": true,
+  "message": "Request successful",
+  "data": {}
+}
+```
+
+## Error
+
+```json
+{
+  "success": false,
+  "message": "Validation failed",
+  "errors": []
+}
+```
+
+---
+
+# Security Notes
+
+* Password hashes are never returned
+* JWT protects private routes
+* Input validation on backend
+* Role-based middleware enforcement
+* Sensitive values stored in environment variables
+
+---
+
+# Frontend Pages
+
+* `/login`
+* `/signup`
+* `/dashboard`
+* `/users`
+* `/users/new`
+* `/users/:id`
+* `/profile`
+
+---
+
+# Future Improvements
+
+* Refresh token support
+* Email verification
+* Password reset flow
+* Activity logs
+* Rate limiting
+* Unit / integration tests
+
+---
+
+# License
+
+For assessment and learning purposes.
